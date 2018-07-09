@@ -1,0 +1,48 @@
+module teste(
+
+	input [0:3] KEY,
+	input [0:9] SW,
+	input CLOCK_50,
+	output reg [7:0] LEDG
+);
+
+reg pup;
+reg [25:0] s;
+reg [25:0] limite;
+
+
+always @(posedge CLOCK_50) begin
+	
+	if (KEY[0] == 0) begin
+		s <= 0;
+		pup <= 0;
+		LEDG <= 1;
+	end
+
+	else begin
+
+		if (s == limite) begin
+		
+			if (pup == 0) begin
+				LEDG <= LEDG * 2;
+			end
+			
+			else begin
+				LEDG <= LEDG / 2;
+			end
+			
+			if (LEDG[6] == 1) pup<=1;
+				else if (LEDG[1] == 1) pup<=0;
+					s <= 0;
+				end 
+
+			else begin
+				s <= s + 1;
+			end
+
+
+		end
+
+	end
+
+endmodule
